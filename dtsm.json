@@ -18,6 +18,9 @@
     },
     "angular-ui-router/angular-ui-router.d.ts": {
       "ref": "67605e10f6eb01c9d4a0d13719d804d6dea9e1cb"
+    },
+    "ace/ace.d.ts": {
+      "ref": "67605e10f6eb01c9d4a0d13719d804d6dea9e1cb"
     }
   }
 }

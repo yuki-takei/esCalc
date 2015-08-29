@@ -49,6 +49,7 @@
     },
     "configFile": "src/jspm.config.js",
     "dependencies": {
+      "ace": "github:ajaxorg/ace-builds@^1.2.0",
       "angular": "github:angular/bower-angular@^1.4.5",
       "angular-material": "github:angular/bower-material@^0.10.1",
       "angular-ui-router": "github:angular-ui/ui-router@^0.2.15"
@@ -58,6 +59,7 @@
       "css": "github:systemjs/plugin-css@^0.1.13",
       "less": "github:aaike/jspm-less-plugin@^0.0.5",
       "typescript": "npm:typescript@^1.6.0-dev.20150821"
-    }
+    },
+    "overrides": {}
   }
 }

@@ -26,6 +26,7 @@ System.config({
   },
 
   map: {
+    "ace": "github:ajaxorg/ace-builds@1.2.0",
     "angular": "github:angular/bower-angular@1.4.5",
     "angular-material": "github:angular/bower-material@0.10.1",
     "angular-ui-router": "github:angular-ui/ui-router@0.2.15",

@@ -3,14 +3,23 @@
 import 'angular';
 import 'angular-ui-router';
 
+import 'ace';
+import 'ace/theme-github'
+
 import 'angular-material';
 
 
 class MainController {
-  public greeting: String;
 
   constructor() {
-    this.greeting = 'Hello! AngularJS!';
+    this.initAce();
+  }
+
+  private initAce(): void {
+    var editor = ace.edit("editor");
+    ace.config.set("basePath", "libs/ace/");
+    editor.setTheme("ace/theme/github");
+    editor.getSession().setMode("ace/mode/javascript");
   }
 }
 
