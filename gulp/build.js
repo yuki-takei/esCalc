@@ -33,10 +33,20 @@ gulp.task('transpile:electron', function () {
 });
 
 /*
- * TODO build:fonts task
+ * copy assets task
  */
-// gulp.task('build:fonts', function () {
-// });
+gulp.task('copy:assets', function () {
+  return gulp.src(conf.paths.src + "/assets/**/*")
+    .pipe(gulp.dest(conf.paths.dist));
+});
+
+/*
+ * copy assets task
+ */
+gulp.task('copy:libs', function () {
+  return gulp.src(conf.paths.src + "/libs/**/*")
+    .pipe(gulp.dest(conf.paths.dist));
+});
 
 
 /**
@@ -88,6 +98,8 @@ gulp.task('build:style', function() {
 });
 
 gulp.task('build', [
+  'copy:assets',
+  'copy:libs',
   'build:html',
   'build:style',
   'build:jspm:bundle-sfx'
