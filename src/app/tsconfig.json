@@ -6,7 +6,8 @@
         "./**/*.ts"
     ],
     "files": [
-        "./app.ts"
+        "./app.ts",
+        "./components/main/main-controller.ts"
     ],
     "formatCodeOptions": {
         "indentSize": 2,

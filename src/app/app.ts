@@ -1,30 +1,12 @@
 /// <reference path="../../.tmp/typings/bundle.d.ts" />
+/// <reference path="../components/main/main-controller.ts" />
 
 import 'angular';
 import 'angular-ui-router';
 
-import 'ace';
-import 'ace/theme-github';
-import 'ace/mode-javascript';
-
 import 'angular-material';
 
-
-class MainController {
-
-  const ACE_BASE_PATH = "libs/ace@1.2.0/";
-
-  constructor() {
-    this.initAce();
-  }
-
-  private initAce(): void {
-    var editor = ace.edit("editor");
-    ace.config.set("basePath", ACE_BASE_PATH);
-    editor.setTheme("ace/theme/github");
-    editor.getSession().setMode("ace/mode/javascript");
-  }
-}
+import MainController from './components/main/main-controller';
 
 angular.module('app', ['ui.router', 'ngMaterial'])
   // URL Mappings
@@ -32,7 +14,7 @@ angular.module('app', ['ui.router', 'ngMaterial'])
     $stateProvider
       .state('top', {
         url: '/',
-        templateUrl: 'app/main.html',
+        templateUrl: 'app/components/main/main.html',
         controller: 'MainController as main'
       })
     ;
@@ -40,7 +22,7 @@ angular.module('app', ['ui.router', 'ngMaterial'])
     $urlRouterProvider.otherwise('/');
   })
 
-  .controller('MainController',MainController)
+  .controller('MainController', MainController)
 
   .run(function($log: ng.ILogService) {
     $log.debug('runBlock end');
