@@ -1,0 +1,24 @@
+<html>
+
+<head>
+  <title>esCalc</title>
+  <link rel="stylesheet/less" type="text/css" href="index.less" />
+</head>
+
+<body>
+  <!-- The app component created in app.ts -->
+  <main ui-view layout="column" layout-fill></main>
+
+  <script src="jspm_packages/system.js"></script>
+  <script src="jspm.config.js"></script>
+  <script>
+    System.import('less');
+    System.import('app');
+  </script>
+
+  <!-- Connect to the electron server process -->
+  <script>require('electron-connect').client.create();</script>
+
+</body>
+
+</html>

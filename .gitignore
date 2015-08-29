@@ -1,0 +1,6 @@
+.tmp/
+.Trash-*
+npm-debug.log.*
+node_modules/
+app/jspm_packages/
+release/
