@@ -4,12 +4,15 @@ import 'angular';
 import 'angular-ui-router';
 
 import 'ace';
-import 'ace/theme-github'
+import 'ace/theme-github';
+import 'ace/mode-javascript';
 
 import 'angular-material';
 
 
 class MainController {
+
+  const ACE_BASE_PATH = "libs/ace@1.2.0/";
 
   constructor() {
     this.initAce();
@@ -17,7 +20,7 @@ class MainController {
 
   private initAce(): void {
     var editor = ace.edit("editor");
-    ace.config.set("basePath", "libs/ace/");
+    ace.config.set("basePath", ACE_BASE_PATH);
     editor.setTheme("ace/theme/github");
     editor.getSession().setMode("ace/mode/javascript");
   }
