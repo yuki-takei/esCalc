@@ -1,10 +1,11 @@
 /// <reference path="../../.tmp/typings/bundle.d.ts" />
-/// <reference path="../components/main/main-controller.ts" />
+/// <reference path="./components/main/main-controller.ts" />
 
 import 'angular';
 import 'angular-ui-router';
 
 import 'angular-material';
+
 
 import MainController from './components/main/main-controller';
 
