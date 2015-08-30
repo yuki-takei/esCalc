@@ -10,10 +10,18 @@ class MainController {
 
   static ACE_BASE_PATH: String = "libs/ace@1.2.0/";
 
+  /**
+   * DI
+   * @type {ng.IScope}
+   */
+  private scope: ng.IScope;
+
   public resultSets: ResultSet[] = [];
   private activeResultSet: ResultSet;
 
-  constructor() {
+  constructor($scope: ng.IScope) {
+    this.scope = $scope;
+
     this.initAce();
   }
 
@@ -65,6 +73,14 @@ class MainController {
     editor.getSession().getDocument().insertMergedLines(currentPos, ['', '']);
   }
 
+  private getActiveResultSet(): ResultSet {
+    if (this.activeResultSet == null) {
+      this.activeResultSet = new ResultSet();
+      this.resultSets.push(this.activeResultSet);
+    }
+    return this.activeResultSet;
+  }
+
   private evalAll(editor: AceAjax.Editor): void {
     // TODO implements
     var lastLineNum = 10;
@@ -85,14 +101,9 @@ class MainController {
     this.resultSets.push(resultSet);
     // reset active
     this.activeResultSet = null;
-  }
 
-  private getActiveResultSet(): ResultSet {
-    if (this.activeResultSet == null) {
-      this.activeResultSet = new ResultSet();
-      this.resultSets.push(this.activeResultSet);
-    }
-    return this.activeResultSet;
+    // apply
+    this.scope.$apply(<any> this.resultSets);
   }
 
   private evalCurrentLine(editor: AceAjax.Editor): void {
@@ -104,6 +115,8 @@ class MainController {
 
     if (result != null) {
       this.getActiveResultSet().addResult(result);
+      // apply
+      this.scope.$apply(<any> this.resultSets);
     }
   }
 
@@ -113,6 +126,13 @@ class MainController {
   }
 
   private eval(line: String): Result {
+    line = line.trim()
+
+    // return null if empty
+    if (line === "") {
+      return null;
+    }
+
     var resultStr = eval(line.toString());
     return <Result> { input: line, output: resultStr };
   }

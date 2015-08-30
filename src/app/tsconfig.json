@@ -8,6 +8,7 @@
     "files": [
         "./app.ts",
         "./components/main/main.ts",
+        "./directives/resultsview/resultsview.ts",
         "./model/result.ts"
     ],
     "formatCodeOptions": {

@@ -8,8 +8,10 @@ import 'angular-material';
 
 
 import MainController from './components/main/main';
+import {EcResultsViewDefinition} from './directives/resultsview/resultsview';
 
 angular.module('app', ['ui.router', 'ngMaterial'])
+
   // URL Mappings
   .config(function ($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) {
     $stateProvider
@@ -24,6 +26,8 @@ angular.module('app', ['ui.router', 'ngMaterial'])
   })
 
   .controller('MainController', MainController)
+
+  .directive('ecResultsView', EcResultsViewDefinition.ddo)
 
   .run(function($log: ng.ILogService) {
     $log.debug('runBlock end');
