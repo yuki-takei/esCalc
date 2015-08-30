@@ -1,7 +1,11 @@
 {
     "version": "1.6.0",
     "compileOnSave": false,
-    "compilerOptions": {},
+    "compilerOptions": {
+        "module": "commonjs",
+        "emitDecoratorMetadata": true,
+        "noImplicitAny": false
+    },
     "filesGlob": [
         "./**/*.ts"
     ],
