@@ -1,10 +1,17 @@
+/// <reference path="../../model/result.ts"/>
+
 import 'ace';
 import 'ace/theme-github';
 import 'ace/mode-javascript';
 
+import {Result, ResultSet} from 'app/model/result';
 
 class MainController {
+
   static ACE_BASE_PATH: String = "libs/ace@1.2.0/";
+
+  public resultSets: ResultSet[] = [];
+  private activeResultSet: ResultSet;
 
   constructor() {
     this.initAce();
@@ -49,15 +56,71 @@ class MainController {
     ]);
   }
 
+  /**
+   * insert a end-of-line to current position
+   * @param {AceAjax.Editor} editor instance
+   */
   private insertNewLine(editor: AceAjax.Editor): void {
-    var currentPos = editor.getCursorPosition();
+    var currentPos: AceAjax.Position = editor.getCursorPosition();
     editor.getSession().getDocument().insertMergedLines(currentPos, ['', '']);
+  }
+
+  private evalAll(editor: AceAjax.Editor): void {
+    // TODO implements
+    var lastLineNum = 10;
+    this.evalSelectedLines(editor, 0, lastLineNum);
+  }
+
+  private evalSelectedLines(editor: AceAjax.Editor, startLineNum: number, endLineNum: number): void {
+    var resultSet: ResultSet = new ResultSet();
+    // eval start to end
+    for (var i=startLineNum; i<=endLineNum; i++) {
+      var result: Result = this.evalLine(editor, i);
+      if (result != null) {
+        resultSet.addResult(result);
+      };
+    }
+
+    // store resultSet
+    this.resultSets.push(resultSet);
+    // reset active
+    this.activeResultSet = null;
+  }
+
+  private getActiveResultSet(): ResultSet {
+    if (this.activeResultSet == null) {
+      this.activeResultSet = new ResultSet();
+      this.resultSets.push(this.activeResultSet);
+    }
+    return this.activeResultSet;
+  }
+
+  private evalCurrentLine(editor: AceAjax.Editor): void {
+    var currentPos: AceAjax.Position = editor.getCursorPosition();
+    var lineNum: number = currentPos.row;
+
+    // eval
+    var result: Result = this.evalLine(editor, lineNum);
+
+    if (result != null) {
+      this.getActiveResultSet().addResult(result);
+    }
+  }
+
+  private evalLine(editor: AceAjax.Editor, lineNum: number): Result {
+    var line: String = editor.getSession().getLine(lineNum);
+    return this.eval(line);
+  }
+
+  private eval(line: String): Result {
+    var resultStr = eval(line.toString());
+    return <Result> { input: line, output: resultStr };
   }
 
   private enterHandler(editor: AceAjax.Editor): void {
     console.log("Enter");
 
-    // TODO evaluate current line
+    this.evalCurrentLine(editor);
 
     this.insertNewLine(editor);
   }

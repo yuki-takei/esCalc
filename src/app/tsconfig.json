@@ -7,7 +7,8 @@
     ],
     "files": [
         "./app.ts",
-        "./components/main/main-controller.ts"
+        "./components/main/main.ts",
+        "./model/result.ts"
     ],
     "formatCodeOptions": {
         "indentSize": 2,
