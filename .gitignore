@@ -2,5 +2,5 @@
 .Trash-*
 npm-debug.log.*
 node_modules
-app/jspm_packages
+src/jspm_packages
 release/

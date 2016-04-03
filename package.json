@@ -59,7 +59,6 @@
       "css": "github:systemjs/plugin-css@^0.1.13",
       "less": "github:aaike/jspm-less-plugin@^0.0.5",
       "typescript": "npm:typescript@^1.6.0-dev.20150821"
-    },
-    "overrides": {}
+    }
   }
 }
