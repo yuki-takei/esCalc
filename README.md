@@ -8,17 +8,10 @@ Features
 
 
 
-### Release
-
-```
-$ gulp package
-```
-
-
-
-Note
+Docs
 -----
 
+* [Build Instructions](docs/build-instructions.md)
 
 
 Contributing
