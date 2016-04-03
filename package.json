@@ -18,6 +18,7 @@
     "del": "~1.2.0",
     "electron-connect": "~0.3.0",
     "electron-packager": "~6.0.0",
+    "electron-prebuilt": "~0.37.0",
     "gulp": "~3.9.0",
     "gulp-babel": "~5.2.0",
     "gulp-cssmin": "~0.1.0",
