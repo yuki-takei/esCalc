@@ -5,16 +5,18 @@ var $ = require('gulp-load-plugins')();
 var _ = require('lodash');
 var path = require('path');
 var conf = require('./conf');
-var jspm = require('jspm');
+var runSequence = require('run-sequence');
 
+var uglifySaveLicense = require('uglify-save-license');
 
 /*
  * Configuration
  */
 var paths = {
-  jspmBundleTargetModule: 'app',
+  jspmBundleTargetModuleDev: 'app',
+  jspmBundleTargetModuleProd: 'app',
   jspmBundleOutFile: conf.paths.dist + '/bundle.js'
-}
+};
 
 
 /**
@@ -52,15 +54,38 @@ gulp.task('copy:libs', function () {
 /**
  * create Self-Executing (SFX) Bundles
  */
-gulp.task('build:jspm:bundle-sfx', $.shell.task([
-  // create command string with array.join()
-  ['jspm bundle-sfx',
-    paths.jspmBundleTargetModule,
-    paths.jspmBundleOutFile,
-    (process.env.JSPM_SFXOPTS_SKIP_SOURCE_MAPS == true) ? '--skip-source-maps' : '',
-    (process.env.JSPM_SFXOPTS_MINIFY == true) ? '--minify' : ''
-  ].join(' ')
-]));
+ gulp.task('build:jspm:bundle-sfx', function() {
+   // determine jspmBundleTargetModule
+   var envString = process.env.JSPM_SFX_TARGET_ENV;
+
+   // default environment
+   if (envString === undefined) {
+     envString = 'dev';
+   }
+
+   var pathsKey = 'jspmBundleTargetModule' + envString.charAt(0).toUpperCase() + envString.slice(1);
+   var jspmBundleTargetModule = (pathsKey in paths) ? paths[pathsKey] : paths.jspmBundleTargetModuleDev;
+
+   // create command string with array.join()
+   var cmd = ['jspm bundle-sfx',
+     jspmBundleTargetModule,
+     paths.jspmBundleOutFile,
+     (process.env.JSPM_SFXOPTS_SKIP_SOURCE_MAPS === 'true') ? '--skip-source-maps' : '',
+     (process.env.JSPM_SFXOPTS_MINIFY === 'true') ? '--minify' : ''
+   ].join(' ');
+
+   return $.run(cmd).exec();
+ });
+
+/**
+* minify Self-Executing (SFX) Bundles
+*/
+gulp.task('build:minify-sfx', function() {
+  return gulp.src(paths.jspmBundleOutFile)
+   .pipe($.ngAnnotate())
+   .pipe($.uglify({ preserveComments: uglifySaveLicense }))
+   .pipe(gulp.dest(conf.paths.dist));
+});
 
 /**
  * build, minify and locate html files
@@ -90,17 +115,54 @@ gulp.task('build:html', function() {
  * 	dest: dist dir
  */
 gulp.task('build:style', function() {
+  var autoprefixOption = {
+    browsers: ['> 5%']
+  };
+
   return gulp.src(conf.paths.src + "/index.less")
     .pipe($.plumber(conf.errorHandler))
     .pipe($.less())
-    .pipe($.cssmin())
+    .pipe($.autoprefixer(autoprefixOption))
+    .pipe($.minifyCss())
     .pipe(gulp.dest(conf.paths.dist));
 });
 
-gulp.task('build', [
+/**
+ * build for development
+ */
+gulp.task('build:dev', [
   'copy:assets',
   'copy:libs',
   'build:html',
   'build:style',
   'build:jspm:bundle-sfx'
 ]);
+
+/**
+ * build for production
+ */
+gulp.task('build:prod', ['clean'], function (done) {
+  $.env({
+    vars: {
+      JSPM_SFX_TARGET_ENV: 'prod',
+      JSPM_SFXOPTS_SKIP_SOURCE_MAPS: true,
+      JSPM_SFXOPTS_MINIFY: false    // ngAnnotate による処理が必要なので、jspm では minify しない
+    }
+  });
+
+  return runSequence(
+    [
+      'copy:assets',
+      'copy:libs',
+      'build:html',
+      'build:style',
+      'build:jspm:bundle-sfx'
+    ],
+    'build:minify-sfx',
+    done);
+});
+
+/**
+ * alias to build:dev
+ */
+gulp.task('build', ['build:dev']);

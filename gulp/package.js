@@ -146,7 +146,7 @@ gulp.task('package', function(done) {
 
   runSequence(
     'clean',
-    ['package:build:electron', 'package:build:packageJson', 'package:deps-for-electron', 'build'],
+    ['package:build:electron', 'package:build:packageJson', 'package:deps-for-electron', 'build:prod'],
     'package:each-platforms',
     done
   );

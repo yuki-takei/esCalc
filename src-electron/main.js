@@ -32,7 +32,7 @@ app.on('ready', () => {
     height: 768
   });
   logger.info('loading url: ' + url);
-  mainWindow.loadUrl(url);
+  mainWindow.loadURL(url);
   mainWindow.on('closed', function () {
 		mainWindow =  null;
 	});
