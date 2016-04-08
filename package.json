@@ -19,6 +19,7 @@
     "electron-connect": "~0.3.0",
     "electron-packager": "~6.0.0",
     "electron-prebuilt": "~0.37.0",
+    "eslint": "^2.7.0",
     "gulp": "~3.9.0",
     "gulp-autoprefixer": "~2.3.0",
     "gulp-babel": "~5.2.0",
