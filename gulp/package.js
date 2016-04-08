@@ -6,6 +6,7 @@ var _ = require('lodash');
 var conf = require('./conf');
 var path = require('path');
 var fs = require('fs');
+var mkdirp = require('mkdirp');
 
 var browserify = require('browserify');
 var merge = require('merge2');
@@ -106,14 +107,19 @@ gulp.task('package:build:electron', ['transpile:electron'], function() {
  * 	src: package.json
  * 	dest: dist dir
  */
-gulp.task('package:build:packageJson', function (done) {
+gulp.task('package:build:packageJson', function () {
   var json = _.cloneDeep(packageJson);
   json.main = conf.files.electronMain;
   json.devDependencies = {};
   json.jspm = {};
-  fs.writeFile(conf.paths.dist + '/package.json', JSON.stringify(json), function (err) {
-    done();
-  });
+
+  // mkdirp
+  mkdirp.sync(conf.paths.dist);
+
+  var filePath = conf.paths.dist + '/package.json';
+  fs.writeFileSync(filePath, JSON.stringify(json));
+
+  return gulp.src(filePath);
 });
 
 // define package task for each platforms
@@ -129,6 +135,10 @@ gulp.task('package:each-platforms', ['win32', 'darwin', 'linux'].map(function (p
       version: conf.meta.electronVersion,
       overwrite: true
     }, function (err) {
+      if (err) {
+        $.util.log(err)
+        $.util.log("'" + taskName + "' is failed");
+      }
       done();
     });
   });
@@ -136,14 +146,6 @@ gulp.task('package:each-platforms', ['win32', 'darwin', 'linux'].map(function (p
 }));
 
 gulp.task('package', function(done) {
-  // set minify flag true
-  $.env({
-    vars: {
-      JSPM_SFXOPTS_SKIP_SOURCE_MAPS: true,
-      JSPM_SFXOPTS_MINIFY: true
-    }
-  });
-
   runSequence(
     'clean',
     ['package:build:electron', 'package:build:packageJson', 'package:deps-for-electron', 'build:prod'],

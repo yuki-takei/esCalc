@@ -141,7 +141,7 @@ gulp.task('build:dev', [
 /**
  * build for production
  */
-gulp.task('build:prod', ['clean'], function (done) {
+gulp.task('build:prod', function (done) {
   $.env({
     vars: {
       JSPM_SFX_TARGET_ENV: 'prod',
