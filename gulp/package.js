@@ -10,7 +10,6 @@ var mkdirp = require('mkdirp');
 
 var browserify = require('browserify');
 var merge = require('merge2');
-var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var packageJson = require('../package.json');
