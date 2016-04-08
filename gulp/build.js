@@ -2,8 +2,6 @@
 
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
-var _ = require('lodash');
-var path = require('path');
 var conf = require('./conf');
 var runSequence = require('run-sequence');
 

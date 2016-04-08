@@ -2,7 +2,6 @@
 
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
-var _ = require('lodash');
 var conf = require('./conf');
 var path = require('path');
 

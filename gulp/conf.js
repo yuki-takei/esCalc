@@ -4,7 +4,7 @@ var $ = require('gulp-load-plugins')();
 
 exports.meta = {
   electronVersion: '0.37.4'
-}
+};
 
 exports.paths = {
   src: 'src',
@@ -19,7 +19,7 @@ exports.files = {
   electronMain: 'main.js',
   indexFileDev: this.paths.src + '/index.dev.html',
   indexFile: this.paths.src + '/index.html'
-}
+};
 
 /**
  *  Common implementation for an error handler of a Gulp plugin

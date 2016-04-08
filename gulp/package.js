@@ -26,7 +26,7 @@ function getAdditionalModules() {
   return [
     // {name: 'modules name', main: ['additional files']},
     {name: 'babel', main: ['polyfill.js']}    // babel/polyfill
-  ]
+  ];
 }
 
 /**
@@ -63,7 +63,7 @@ gulp.task('package:deps-for-electron', function () {
   // add additional modules
   getAdditionalModules().forEach(function(it) {
     modules.push(it);
-  })
+  });
 
   // create bundle file and minify for each main files
   modules.forEach(function (it) {
@@ -72,7 +72,7 @@ gulp.task('package:deps-for-electron', function () {
         detectGlobal: false,
         standalone: path.basename(it.name)
       });
-      excludeModules.forEach(function (moduleName) {b.exclude(moduleName)});
+      excludeModules.forEach(function (moduleName) {b.exclude(moduleName);});
       streams.push(b.bundle()
         .pipe(source(entry))
         .pipe(buffer())
@@ -136,7 +136,7 @@ gulp.task('package:each-platforms', ['win32', 'darwin', 'linux'].map(function (p
       overwrite: true
     }, function (err) {
       if (err) {
-        $.util.log(err)
+        $.util.log(err);
         $.util.log("'" + taskName + "' is failed");
       }
       done();
