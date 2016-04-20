@@ -20,7 +20,8 @@ before_deploy:
 - popd
 deploy:
   provider: releases
-  api_key: "$GITHUB_OAUTH_TOKEN"
+  api_key:
+    secure: $GITHUB_OAUTH_TOKEN
   file_glob: true
   file:
   - release/*.zip
