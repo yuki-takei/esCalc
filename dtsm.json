@@ -5,8 +5,8 @@
       "ref": "master"
     }
   ],
-  "path": ".tmp/typings",
-  "bundle": ".tmp/typings/bundle.d.ts",
+  "path": ".typings",
+  "bundle": ".typings/bundle.d.ts",
   "link": {
     "npm": {
       "include": true

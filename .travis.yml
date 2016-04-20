@@ -32,4 +32,4 @@ cache:
   directories:
   - node_modules
   - src/jspm_packages
-  - ".tmp/typings"
+  - ".typings"

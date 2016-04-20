@@ -1,4 +1,4 @@
-/// <reference path="../../.tmp/typings/bundle.d.ts" />
+/// <reference path="../../.typings/bundle.d.ts" />
 /// <reference path="./components/main/main.ts" />
 
 import 'angular';
