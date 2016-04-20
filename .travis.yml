@@ -12,8 +12,13 @@ before_script:
 - jspm install
 - dtsm install
 script:
+# test
 - mocha --compilers ts:espower-typescript/guess test/**/*.ts
-- gulp package
+# If the current build for a tag, process
+#   $ gulp package
+# otherwise,
+#   $ gulp build
+- if [ $TRAVIS_TAG ]; then gulp package; else gulp build; fi
 before_deploy:
 - pushd release
 - pushd darwin; zip -q ../esCalc-osx-x64.zip -r esCalc-darwin-x64; popd
