@@ -1,6 +1,6 @@
 {
   "name": "esCalc",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "The calculator that can be described a formula in EcmaScript",
   "author": "Yuki Takei <yuki@weseek.co.jp>",
   "license": "Apache-2.0",

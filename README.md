@@ -1,6 +1,9 @@
 esCalc
 ======
 
+[![Build Status](https://travis-ci.org/yuki-takei/esCalc.svg?branch=master)](https://travis-ci.org/yuki-takei/esCalc)
+[![Dependency Status](https://david-dm.org/yuki-takei/esCalc.svg)](https://david-dm.org/yuki-takei/esCalc)
+[![devDependency Status](https://david-dm.org/yuki-takei/esCalc/dev-status.svg)](https://david-dm.org/yuki-takei/esCalc#info=devDependencies)
 
 Features
 --------
