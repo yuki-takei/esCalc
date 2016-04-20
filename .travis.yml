@@ -1,36 +1,35 @@
 language: node_js
 node_js:
-  - '4'
+- '4'
 env:
   global:
-    secure: sOJCaOm03+URQmPCG4BdJGZMhaFqjXN/Jksww3fNcwtCPiJZCd9GzZE+3dszK+GabOP/hrQ4P3foTmDozg9kDPNGfxFlcSkp+jkH7+jXa7m6Q98UhmvvEw9cZ8gb5L+0UiOiPJgdHFgesrYC9AjrewFHGtvb+3h9+pHfPx5FNu3hElEoOZa5jSd6IxcHMzMDPA5gZv7mrqs+7hfPSYOAv5WJQcm3Qdaw1ju0cHFJYrBy5bZ0ZAX8ohPlP10Snkyk6oYNxqy3H3oqZWoZ2emMxeCnWxT31Bbu+d82im4XEbttJN76ykmkmKDECSTk46pLq96ofRDbYgDqZCJxSQgBNnHBgLu/TggzRt1U4A2w0TSZVkGO2Ln82Z99rB42ibYC4llIvekf3xc7Y4WI7IrMOn5QZywCEQPeZ7Zud/oRA2bcKFX1gIgEKKGUMn836+Iuo8EkX40ca2u1hwCFKvWbfTHgzQz3hWqeGaSJKyce2mL0Nt+B479nRryCgsT1+Arxyi9MJfmbuAWddhifStCRJzzch6for35YKJaCoyLpN72u/m3JOstV0J5sBt4nNvFBP1t2g55pPc8gWkcCiv9rYjXs/dOZdktjuODrDLO34xPd3vEV0ONjEZvy1wmZW0EBC+A89hbX/ie7t13fPw/zE94qpdt5l/mUsLSy1swwzzs=
+    secure: BRYFD6vk6RawhajcdHOlOKXE15ELhBiQG/sSyaZSoyoXQdEv7tkPRk3Cp2yEYBRCwe2l+sJ7Ow6+0bqBISO7JLtSNdOBI7YPC6YoS3a8S9pwzU+N+zZkplcSvURcxScxVQNYOVn6VCWSJixc/J3wgdzExYKlCxOrOtCRsAWn2UbjVUc1HnzLEc1uz94d/Mx/nmmWmQKVtzzOHB47Q4m4jrIVMYx+o1DzKs8xaJ16v4ITj2Xod8my7hViv9rCGaThUMm1PoPL2WKH3Hn+EaQaUZgQ1NC2gBoBdVQZLd5U82bZVp2K+VhAIncgflu90rN0iRwcNmy3yV2MoMpEjBZN2gdTL+LPqufgf91yKdOCIb5EliVosIKuAvj3CzF1DstCtxq1IGoljqNxIfK16RK+8p2M43lWDlj9yFlT/Smb0PNJEKVqD1jIrY9ogVQ3oHJAN6ppQkuYExKtqk6NB8owrmHv5qaSmzCVxDoqwVm7NOBWDWqP71oBUucf3uOT59WSy0ZTOF+Sx4D8HaVk+hvPf+aucGAyeGRcTWYKvh9QlF/XSatdykoEe5SMxIasamAu0xtmJyXgdCvCBpKg8pk6u2OWf+OWD5WFe1gTtKZSaqtfSta9PeuZV4O3CJoL1bJu0O1Wx8V1zJa7NBmBP7GBc6lzWfDRt1E8uOfpvIitkck=
 before_script:
-  - npm install -g gulp jspm dtsm mocha
-  - jspm config registries.github.auth $GITHUB_OAUTH_TOKEN
-  - npm install
-  - jspm install
-  - dtsm install
+- npm install -g gulp jspm dtsm mocha
+- jspm config registries.github.auth $GITHUB_OAUTH_TOKEN
+- jspm install
+- dtsm install
 script:
-  - mocha --compilers ts:espower-typescript/guess test/**/*.ts
-  - gulp package
+- mocha --compilers ts:espower-typescript/guess test/**/*.ts
+- gulp package
 before_deploy:
-  - pushd release
-  - pushd darwin; zip -q ../esCalc-osx-x64.zip -r esCalc-darwin-x64; popd
-  - pushd win32; zip -q ../esCalc-win32-x64.zip -r esCalc-win32-x64; popd
-  - pushd linux; tar -jcf ../esCalc-linux-x64.tar.bz2 esCalc-linux-x64; popd
-  - popd
+- pushd release
+- pushd darwin; zip -q ../esCalc-osx-x64.zip -r esCalc-darwin-x64; popd
+- pushd win32; zip -q ../esCalc-win32-x64.zip -r esCalc-win32-x64; popd
+- pushd linux; tar -jcf ../esCalc-linux-x64.tar.bz2 esCalc-linux-x64; popd
+- popd
 deploy:
   provider: releases
-  api_key: $GITHUB_OAUTH_TOKEN
+  api_key: "$GITHUB_OAUTH_TOKEN"
   file_glob: true
   file:
-    - release/*.zip
-    - release/*.tar.bz2
+  - release/*.zip
+  - release/*.tar.bz2
   on:
     tags: true
   skip_cleanup: true
 cache:
   directories:
-    - node_modules
-    - src/jspm_packages
-    - .tmp/typings
+  - node_modules
+  - src/jspm_packages
+  - ".tmp/typings"
