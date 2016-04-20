@@ -16,7 +16,7 @@ Instructions
 1. Install global packages:
 
   ```sh
-  npm install -g gulp jspm dtsm
+  npm install -g gulp jspm dtsm mocha
   ```
 
 1. Install Dependencies:
