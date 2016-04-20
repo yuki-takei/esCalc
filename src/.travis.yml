@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - "4"
+before_script:
+  - npm install -g gulp jspm dtsm mocha
+  - npm install
+  - jspm install
+  - dtsm install
+script:
+  - mocha --compilers ts:espower-typescript/guess test/**/*.ts
+  - gulp package
