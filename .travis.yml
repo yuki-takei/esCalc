@@ -3,13 +3,34 @@ node_js:
   - '4'
 env:
   global:
-    secure: mMWY4Yk0by921KmraMMvG6y/TKxTLvGI5sRiTtA4aqz/bgNLG4ZKMP/LQnrBoSzUSZDEIQm90jOP/bSnK2AkaQmRyh7sP6Y2yQWPgybmcpiRfc9ZaG0XnbQIfOtLVUUU5ITbwSgRltTCRRH1mup97WxOTI52rH1LVkDTTu1aIUnr9X0QSkZErb1wtPs8WAgOKIoZgPzTlCJBCjf32lt5gHOtWXHi5w9rgngkkHBPKKWpBa5mcaAmEJ/zV4tuBIUJEAVsOSKXOH9GomH/egmumEYq4aaxMVu0IrqsEmuUe1VEXzJC29RjKI8tF5N4qFV84VEkCulBEZTuY3wS9uiFcLFQA2uLyY3Fyna2+3YGhg9YXGQBG/7jGxZxELpZThNKLYUw/MeN7pV3uyUZKth061BOX9on2KRMdujWgUFBDkwtI0aEV/jeAgJ8fUteSRdBqlMclfzT6d5BElNbKd+uWYj23rUBekussKI46IMr6CDvhZwByUZyw0fKDcTWpRAhi9qK/A9E020bmvhf+BlcJkGmQGhaKXaSM+u/W5WNQw1I7PH9JXGILuDKVWTH80KiqF9zDM7o02gKE6ncDuzIlofmo0Zt5sAc0ZiwEdL7YOIi5lchOKEKZoNBclNwoozHB0t3HivtPuaTcp1/YDEJVc/w7oHCbwAf6LJTADmN0Io=
+    secure: sOJCaOm03+URQmPCG4BdJGZMhaFqjXN/Jksww3fNcwtCPiJZCd9GzZE+3dszK+GabOP/hrQ4P3foTmDozg9kDPNGfxFlcSkp+jkH7+jXa7m6Q98UhmvvEw9cZ8gb5L+0UiOiPJgdHFgesrYC9AjrewFHGtvb+3h9+pHfPx5FNu3hElEoOZa5jSd6IxcHMzMDPA5gZv7mrqs+7hfPSYOAv5WJQcm3Qdaw1ju0cHFJYrBy5bZ0ZAX8ohPlP10Snkyk6oYNxqy3H3oqZWoZ2emMxeCnWxT31Bbu+d82im4XEbttJN76ykmkmKDECSTk46pLq96ofRDbYgDqZCJxSQgBNnHBgLu/TggzRt1U4A2w0TSZVkGO2Ln82Z99rB42ibYC4llIvekf3xc7Y4WI7IrMOn5QZywCEQPeZ7Zud/oRA2bcKFX1gIgEKKGUMn836+Iuo8EkX40ca2u1hwCFKvWbfTHgzQz3hWqeGaSJKyce2mL0Nt+B479nRryCgsT1+Arxyi9MJfmbuAWddhifStCRJzzch6for35YKJaCoyLpN72u/m3JOstV0J5sBt4nNvFBP1t2g55pPc8gWkcCiv9rYjXs/dOZdktjuODrDLO34xPd3vEV0ONjEZvy1wmZW0EBC+A89hbX/ie7t13fPw/zE94qpdt5l/mUsLSy1swwzzs=
 before_script:
   - npm install -g gulp jspm dtsm mocha
-  - jspm config registries.github.auth $JSPM_GITHUB_AUTH_TOKEN
+  - jspm config registries.github.auth $GITHUB_OAUTH_TOKEN
   - npm install
   - jspm install
   - dtsm install
 script:
   - mocha --compilers ts:espower-typescript/guess test/**/*.ts
   - gulp package
+before_deploy:
+  - pushd release
+  - pushd darwin; zip -q ../esCalc-osx-x64.zip -r esCalc-darwin-x64; popd
+  - pushd win32; zip -q ../esCalc-win32-x64.zip -r esCalc-win32-x64; popd
+  - pushd linux; tar -jcf ../esCalc-linux-x64.tar.bz2 esCalc-linux-x64; popd
+  - popd
+deploy:
+  provider: releases
+  api_key: $GITHUB_OAUTH_TOKEN
+  file_glob: true
+  file:
+    - release/*.zip
+    - release/*.tar.bz2
+  on:
+    tags: true
+  skip_cleanup: true
+cache:
+  directories:
+    - node_modules
+    - src/jspm_packages
+    - .tmp/typings
