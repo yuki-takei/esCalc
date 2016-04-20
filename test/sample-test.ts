@@ -1,5 +1,3 @@
-/// <reference path="../.typings/bundle.d.ts" />
-
 import * as assert from 'power-assert'
 import {mytest} from '../src/mytest'
 
@@ -10,6 +8,6 @@ describe("Some Class", () => {
         const a = mytest.SomeClass.someMethod()
         const b = {c: 0, d: "abc"}
         assert.deepEqual(a, b)
-      });
-    });
-});
+      })
+    })
+})
