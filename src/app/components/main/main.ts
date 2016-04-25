@@ -19,6 +19,12 @@ class MainController {
   public resultSets: ResultSet[] = [];
   private activeResultSet: ResultSet;
 
+  /**
+   * Context Object for eval.call()
+   * @type {Object}
+   */
+  private evalContext: Object = {}
+
   constructor($scope: ng.IScope) {
     this.scope = $scope;
 
@@ -120,21 +126,32 @@ class MainController {
     }
   }
 
+  /**
+   * evaluate script of the specified line
+   * @param  {AceAjax.Editor} editor  [description]
+   * @param  {number}         lineNum line Number
+   * @return {Result}                 [description]
+   */
   private evalLine(editor: AceAjax.Editor, lineNum: number): Result {
-    var line: String = editor.getSession().getLine(lineNum);
-    return this.eval(line);
+    var line: String = editor.getSession().getLine(lineNum)
+    return this.eval(line)
   }
 
+  /**
+   * evaluate the specified script
+   * @param  {String} line script
+   * @return {Result}      [description]
+   */
   private eval(line: String): Result {
     line = line.trim()
 
     // return null if empty
     if (line === "") {
-      return null;
+      return null
     }
 
-    var resultStr = eval(line.toString());
-    return <Result> { input: line, output: resultStr };
+    var resultStr = eval.call(this.evalContext, line.toString())
+    return <Result> { input: line, output: resultStr }
   }
 
   private enterHandler(editor: AceAjax.Editor): void {
