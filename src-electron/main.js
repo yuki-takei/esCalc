@@ -1,5 +1,5 @@
 'use strict';
-require('babel/polyfill');
+require('babel-polyfill');
 
 import log4js from 'log4js';
 let logger = log4js.getLogger();

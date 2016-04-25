@@ -99,8 +99,15 @@ gulp.task('serve:electron', ['transpile:electron'], function () {
  * 	watching:
  * 		- (nothing)
  */
-gulp.task('serve:dist:electron', ['build'], function () {
+gulp.task('serve:dist:electron', ['build', 'transpile:electron'], function () {
+  // switch the pathToApp for BrowserWindow.loadUrl(url) according to the value of NODE_ENV
+  $.env({
+    vars: {
+      APP_RELATIVE_PATH: path.relative(conf.paths.serve, conf.files.indexFileDev)
+    }
+  });
+
   electronServer.create({
-    path: conf.paths.dist + "/main.js"
+    path: conf.paths.serve + "/main.js"
   }).start();
 });

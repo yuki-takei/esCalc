@@ -24,7 +24,7 @@ var uglifySaveLicense = require('uglify-save-license');
 function getAdditionalModules() {
   return [
     // {name: 'modules name', main: ['additional files']},
-    {name: 'babel-polyfill', main: ['lib/index.js']}
+    {name: 'babel-polyfill', main: ['dist/polyfill.min.js']}
   ];
 }
 
