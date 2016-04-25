@@ -26,7 +26,7 @@ gulp.task('transpile:electron', function () {
   return gulp.src(conf.paths.srcElectron + "/**/*.js")
     .pipe($.plumber(conf.errorHandler))
     .pipe($.sourcemaps.init())
-    .pipe($.babel({stage: 2}))
+    .pipe($.babel({ presets: ['es2015']	}))
     .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest(conf.paths.serve))
   ;

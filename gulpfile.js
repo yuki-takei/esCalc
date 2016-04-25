@@ -25,7 +25,7 @@ wrench.readdirSyncRecursive('./gulp').filter(function(file) {
 
 // Delete generated directories.
 gulp.task('clean', function (done) {
-  del([conf.paths.tmp, conf.paths.release], function () {
+  del([conf.paths.tmp, conf.paths.release]).then(() => {
     done();
   });
 });
