@@ -1,13 +1,13 @@
 'use strict';
 require('babel-polyfill');
 
-import log4js from 'log4js';
+let log4js = require('log4js');
 let logger = log4js.getLogger();
 
-import app from 'app';
-import BrowserWindow from 'browser-window';
-import crashReporter from 'crash-reporter';
-import Menu from 'menu';
+let app = require('app');
+let BrowserWindow = require('browser-window');
+let crashReporter = require('crash-reporter');
+let Menu = require('menu');
 
 let mainWindow = null;
 if (process.env.NODE_ENV === 'development') {
